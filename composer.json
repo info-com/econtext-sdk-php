@@ -1,0 +1,24 @@
+{
+    "name":"info-com/econtext-api-php-client",
+    "description":"A PHP client to interact with the eContext API",
+    "type":"library",
+    "homepage":"http://www.econtext.com",
+    "license":"LGPL-3.0+",
+    "authors": [
+        {
+            "name":"Jonathan Spalink",
+            "email":"jspalink@info.com",
+            "role":"Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "eContext\\": "src/php/econtext-api-php-client/"
+        }
+    },
+    
+    "require": {
+        "guzzlehttp/guzzle": "^6.1",
+        "info-com/econtext-lib-file": "*"
+    }
+}

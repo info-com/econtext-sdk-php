@@ -1,0 +1,30 @@
+A simple PHP client to expose the eContext API.
+
+Basic Usage
+    
+    $posts = [
+        "HAPPY PI DAY 3.141592653589793238462643383279502884197169399375...",
+        "Happy birthday, MIT! The Institute was founded April 10, 1861 by William Barton Rogers. #tbt",
+        "Consciousness is a state of matter",
+        "Flying car by @MITAeroAstro spinoff @Terrafugia moves from science fiction to reality",
+        "Amazing Time-Lapse Video Shows Evolution of #Universe Like Never Before",
+        "MIT alum @JeopardyJulia now trails only @kenjennings for all-time #Jeopardy! wins",
+        "Happy b-day Nikola #Tesla! Startup @WiTricity is bringing his ideas on wireless power to life",
+        "Seen at the Student Center this afternoon: Tetris hash browns!",
+        "Researchers at @eapsMIT say a large earthquake may occur 5 miles from Istanbul",
+        "MIT's robotic cheetah can now run and jump untethered",
+        "Spacesuit from @MITAeroAstro shrink-wraps to astronauts' bodies",
+        "This social post should be flagged for fireworks and gambling references"
+    ];
+    $client = new eContext\Client($username, $password);
+    $classify = new Social($client);
+    $classify->setData($posts);
+    $result = $classify->classify();
+    
+    foreach($result->yieldResults() as $mapping) {
+        foreach($mapping['scored_categories'] as $cat_info) {
+            $cid = $cat_info['category_id'];
+            echo " * {$result->getCategory($cid)['name']}".PHP_EOL;
+        }
+    }
+
