@@ -1,5 +1,18 @@
 A simple PHP client to expose the eContext API.
 
+Installation
+
+We recommending using Composer to include the eContext library in your project.
+In the composer.json file for your project you can simply include 
+econtext-sdk-php and Composer will handle downloading and including the most
+recent version for you.
+
+{
+   "require": {
+      "info-com/econtext-sdk-php": "0.1.*"
+   }
+}
+
 Basic Usage
     
     $posts = [
