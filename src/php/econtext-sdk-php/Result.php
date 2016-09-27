@@ -34,6 +34,7 @@ class Result {
     protected $currentPage = 0;
     
     protected $error = null;
+    protected $body = null;
     
     
     public function __construct($tempDir=null) {
@@ -89,6 +90,7 @@ class Result {
     }
     
     protected function loadPage($data) {
+        $this->body = $data;
         $this->error = $this->get('error', $data[Client::JSON_OUTER_ELEMENT], null);
         return null;
     }
