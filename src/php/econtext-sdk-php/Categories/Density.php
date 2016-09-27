@@ -2,17 +2,6 @@
 
 namespace eContext\Categories;
 use eContext\Categories\Result;
-use Zenya\CLI;
-
-
-if (basename($argv[0]) == basename(__FILE__)) {
-    require_once('/Users/jspalink/dev/econtext-api-php-client/vendor/autoload.php');
-    #require_once('../../Client.php');
-    #require_once('../Classify.php');
-    #require_once('../Result.php');
-    require_once('/Users/jspalink/dev/zenya-php-lib//src/Zenya/CLI.php');
-    require_once('/Users/jspalink/dev/zenya-php-lib/src/Zenya/CLI/Argument.php');
-}
 
 class Density {
     
@@ -124,16 +113,4 @@ function main($username, $password, $keywords) {
         $categories = json_encode($categories);
         echo "{$result->getCurrentPage()} .. {$categories}".PHP_EOL;
     }
-}
-
-if (basename($argv[0]) == basename(__FILE__)) {
-    $a = new CLI("Run a list of keywords to describe.");
-    $a->addArg("i", "input", "input", "input", true, null, "store", "string", "Comma separated list of keywords");
-    $a->addArg("u", "username", "username", "username", true, null, "store", "string", "eContext API Username");
-    $a->addArg("p", "password", "password", "password", true, null, "store", "string", "eContext API Password");
-    $args = $a->parse();
-    $keywords = explode(",", $a->getArg('input')->getValue());
-    $username = $a->getArg('username')->getValue();
-    $password = $a->getArg('password')->getValue();
-    main($username, $password, $keywords);
 }

@@ -25,8 +25,8 @@ class Text extends \eContext\Classify\Result {
         }
         parent::loadPage($data);
         $this->results = array(
-            "scored_categories"=>$this->get('scored_categories', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array()),
-            "scored_keywords"=>$this->get('scored_keywords', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array())
+            "scored_categories"=>$this->get('scored_categories', $this->inner, array()),
+            "scored_keywords"=>$this->get('scored_keywords', $this->inner, array())
         );
         return True;
     }

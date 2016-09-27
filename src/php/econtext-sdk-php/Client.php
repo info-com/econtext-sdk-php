@@ -2,8 +2,6 @@
 
 namespace eContext;
 use GuzzleHttp;
-use eContext\File;
-use eContext\Classify\Result;
 
 class Client {
     
@@ -13,8 +11,9 @@ class Client {
 	private $password;
     private $baseuri;
     private $guzzleClient;
+    protected $statusCallback;
 	
-	public function __construct($username, $password, $baseuri="https://api.econtext.com") {
+	public function __construct($username, $password, $baseuri="https://api.econtext.com", $statusCallback=null) {
 		$this->username = $username;
 		$this->password = $password;
         $this->baseuri = $baseuri;
@@ -26,7 +25,21 @@ class Client {
                 "Content-Type" => "application/json"
             ],
         ]);
+        $this->statusCallback = $statusCallback;
 	}
+    
+    /**
+     * Sets a callback function which is called after each API request.  You can
+     * use this to track progress, stat collection, etc.  The function should
+     * accept two parameters - the first is an index number corresponding to the
+     * sequence id for that call (e.g. $data[4]).  The second is the Guzzle
+     * response object for that call.
+     * 
+     * @param type $statusCallback
+     */
+    public function setStatusCallback($statusCallback) {
+        $this->statusCallback = $statusCallback;
+    }
     
     public function getGuzzleClient() {
         return $this->guzzleClient;
@@ -45,15 +58,27 @@ class Client {
      * 
      */
     public function runPool($yieldAsyncCalls, $resultSet=None, $concurrency=1) {
+        $client = $this;
         $pool = new \GuzzleHttp\Pool($this->guzzleClient, $yieldAsyncCalls, [
             'concurrency' => $concurrency,
             'fulfilled' => function ($response, $index) use ($resultSet) {
-                echo "received response for {$index}".memory_get_usage().PHP_EOL;
+                #echo "received response for {$index} ".memory_get_usage().PHP_EOL;
                 $resultSet->addResultSet((string)$response->getBody(), $index);
-                #print_r((string)$response->getBody());
+                if(is_callable($this->statusCallback)) {
+                    $this->statusCallback->__invoke($index, $response);
+                }
             },
-            'rejected' => function ($reason, $index) {
-                echo "{$index} OOPS - $reason".PHP_EOL;
+            'rejected' => function ($reason, $index) use ($resultSet) {
+                #echo "{$index} OOPS - {$reason->getCode()}".PHP_EOL;
+                if($reason->getCode() == 503) {
+                    $body = '{"econtext": {"error": {"message": "503 Service Temporarily Unavailable", "code": 503}}}';
+                } else {
+                    $body = (string)$reason->getResponse()->getBody();
+                }
+                $resultSet->addResultSet($body, $index);
+                if(is_callable($this->statusCallback)) {
+                    $this->statusCallback->__invoke($index, $reason->getResponse());
+                }
             },
         ]);
         $promise = $pool->promise();

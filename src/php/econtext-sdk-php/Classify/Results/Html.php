@@ -25,9 +25,9 @@ class Html extends \eContext\Classify\Result {
         }
         parent::loadPage($data);
         $this->results = array(
-            "title"=>$this->get('title', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], ""),
-            "scored_categories"=>$this->get('scored_categories', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array()),
-            "scored_keywords"=>$this->get('scored_keywords', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array())
+            "title"=>$this->get('title', $this->inner, ""),
+            "scored_categories"=>$this->get('scored_categories', $this->inner, array()),
+            "scored_keywords"=>$this->get('scored_keywords', $this->inner, array())
         );
         return True;
     }

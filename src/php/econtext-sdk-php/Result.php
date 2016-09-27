@@ -33,6 +33,8 @@ class Result {
      */
     protected $currentPage = 0;
     
+    protected $error = null;
+    
     
     public function __construct($tempDir=null) {
         $this->tempDir = $tempDir != null ?: $this->createDefaultTempDir();
@@ -71,10 +73,10 @@ class Result {
     protected function getPage($index=null) {
         if($index === null) {
             $index = $this->currentPage++;
-            echo "index is null - get new index: {$index}".PHP_EOL;
+            #echo "index is null - get new index: {$index}".PHP_EOL;
         }
         if($index >= count($this->tempFiles)) {
-            echo "{$index} >= ".count($this->tempFiles).PHP_EOL;
+            #echo "{$index} >= ".count($this->tempFiles).PHP_EOL;
             $this->currentPage = null;
             return null;
         }
@@ -87,7 +89,24 @@ class Result {
     }
     
     protected function loadPage($data) {
+        $this->error = $this->get('error', $data[Client::JSON_OUTER_ELEMENT], null);
         return null;
+    }
+    
+    public function hasError() {
+        return $this->error != null;
+    }
+    
+    public function getErrorMessage() {
+        if($this->hasError()) {
+            return $this->get('message', $this->error, null);
+        }
+    }
+    
+    public function getErrorCode() {
+        if($this->hasError()) {
+            return $this->get('code', $this->error, null);
+        }
     }
     
     /**

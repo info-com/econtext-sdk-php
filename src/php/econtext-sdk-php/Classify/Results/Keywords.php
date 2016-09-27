@@ -25,8 +25,8 @@ class Keywords extends \eContext\Classify\Result {
             return null;
         }
         parent::loadPage($data);
-        $this->mappings = $this->get('mappings', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array());
-        $this->results = $this->get('results', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array());
+        $this->mappings = $this->get('mappings', $this->inner, array());
+        $this->results = $this->get('results', $this->inner, array());
         return True;
     }
     

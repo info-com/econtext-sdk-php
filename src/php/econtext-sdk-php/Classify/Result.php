@@ -23,9 +23,10 @@ class Result  extends \eContext\Result {
     
     protected function loadPage($data) {
         parent::loadPage($data);
-        $this->categories = $this->get('categories', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array());
-        $this->overlay = $this->get('overlay', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array());
-        $this->translate = $this->get('translate', $data[Client::JSON_OUTER_ELEMENT][Classify::JSON_INNER_ELEMENT], array());
+        $this->inner = $this->get(Classify::JSON_INNER_ELEMENT, $data[Client::JSON_OUTER_ELEMENT], array());
+        $this->categories = $this->get('categories', $this->inner, array());
+        $this->overlay = $this->get('overlay', $this->inner, array());
+        $this->translate = $this->get('translate', $this->inner, array());
     }
     
     public function getCategory($cid) {

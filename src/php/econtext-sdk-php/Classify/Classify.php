@@ -87,11 +87,10 @@ abstract class Classify {
             if($data == false) {
                 return;
             }
-            echo static::URL_REQUEST_BASE.static::URL_REQUEST_CLASS . PHP_EOL;
+            # echo $i . " " . static::URL_REQUEST_BASE.static::URL_REQUEST_CLASS . PHP_EOL;
             $input = $this->input;
             $input['async'] = false;
             $input[static::CLASSIFY_TYPE] = $data;
-            print_r($input);
             $body = \GuzzleHttp\Psr7\stream_for(json_encode($input));
             yield $i++ => function() use ($body, $data) {
                 return $this->client->getGuzzleClient()->postAsync(static::URL_REQUEST_BASE.static::URL_REQUEST_CLASS, ['body' => \GuzzleHttp\Psr7\stream_for($body)]);
