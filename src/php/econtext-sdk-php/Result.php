@@ -82,6 +82,7 @@ class Result {
             return null;
         }
         $tempFile = $this->tempFiles[$index];
+        $tempFile->open('r');
         $fileContents = array();
         while(($line = $tempFile->readline()) != false) {
             $fileContents[] = $line;
@@ -93,6 +94,10 @@ class Result {
         $this->body = $data;
         $this->error = $this->get('error', $data[Client::JSON_OUTER_ELEMENT], null);
         return null;
+    }
+    
+    public function getBody() {
+        return $this->body;
     }
     
     public function hasError() {
@@ -119,7 +124,7 @@ class Result {
     public function addResultSet($resultSet, $index=null) {
         $tempFile = new Temp(null, 'c+', $this->tempDir, 'econtext-result', true);
         $tempFile->write($resultSet);
-        $tempFile->rewind();
+        $tempFile->close();
         if($index !== null) {
             $this->tempFiles[$index] = $tempFile;
         } else {
