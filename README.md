@@ -7,40 +7,44 @@ In the composer.json file for your project you can simply include
 econtext-sdk-php and Composer will handle downloading and including the most
 recent version for you.
 
+```
 {
    "require": {
       "info-com/econtext-sdk-php": "0.1.*"
    }
 }
+```
 
 ## Basic Usage
-    
-    $posts = [
-        "HAPPY PI DAY 3.141592653589793238462643383279502884197169399375...",
-        "Happy birthday, MIT! The Institute was founded April 10, 1861 by William Barton Rogers. #tbt",
-        "Consciousness is a state of matter",
-        "Flying car by @MITAeroAstro spinoff @Terrafugia moves from science fiction to reality",
-        "Amazing Time-Lapse Video Shows Evolution of #Universe Like Never Before",
-        "MIT alum @JeopardyJulia now trails only @kenjennings for all-time #Jeopardy! wins",
-        "Happy b-day Nikola #Tesla! Startup @WiTricity is bringing his ideas on wireless power to life",
-        "Seen at the Student Center this afternoon: Tetris hash browns!",
-        "Researchers at @eapsMIT say a large earthquake may occur 5 miles from Istanbul",
-        "MIT's robotic cheetah can now run and jump untethered",
-        "Spacesuit from @MITAeroAstro shrink-wraps to astronauts' bodies",
-        "This social post should be flagged for fireworks and gambling references"
-    ];
-    $client = new eContext\Client($username, $password);
-    $classify = new Social($client);
-    $classify->setData($posts);
-    $classify->setParameter('classification_type', 1);
-    $result = $classify->classify();
-    
-    foreach($result->yieldResults() as $mapping) {
-        foreach($mapping['scored_categories'] as $cat_info) {
-            $cid = $cat_info['category_id'];
-            echo " * {$result->getCategory($cid)['name']}".PHP_EOL;
-        }
+
+```
+$posts = [
+    "HAPPY PI DAY 3.141592653589793238462643383279502884197169399375...",
+    "Happy birthday, MIT! The Institute was founded April 10, 1861 by William Barton Rogers. #tbt",
+    "Consciousness is a state of matter",
+    "Flying car by @MITAeroAstro spinoff @Terrafugia moves from science fiction to reality",
+    "Amazing Time-Lapse Video Shows Evolution of #Universe Like Never Before",
+    "MIT alum @JeopardyJulia now trails only @kenjennings for all-time #Jeopardy! wins",
+    "Happy b-day Nikola #Tesla! Startup @WiTricity is bringing his ideas on wireless power to life",
+    "Seen at the Student Center this afternoon: Tetris hash browns!",
+    "Researchers at @eapsMIT say a large earthquake may occur 5 miles from Istanbul",
+    "MIT's robotic cheetah can now run and jump untethered",
+    "Spacesuit from @MITAeroAstro shrink-wraps to astronauts' bodies",
+    "This social post should be flagged for fireworks and gambling references"
+];
+$client = new eContext\Client($username, $password);
+$classify = new Social($client);
+$classify->setData($posts);
+$classify->setParameter('classification_type', 1);
+$result = $classify->classify();
+
+foreach($result->yieldResults() as $mapping) {
+    foreach($mapping['scored_categories'] as $cat_info) {
+        $cid = $cat_info['category_id'];
+        echo " * {$result->getCategory($cid)['name']}".PHP_EOL;
     }
+}
+```
 
 ## eContext\Client
 
@@ -103,20 +107,20 @@ HTML content from several different pages at once, or several urls at once.
 For example:
 
 ```
-    $url = new eContext\Classify\Type\Url($client);
-    $urls = ['http://www.cnn.com', 'http://www.econtext.ai', 'http://www.nytimes.com'];
-    $url->setData($urls);
-    $results = $url->classify(3); # classify all pages at once
+$url = new eContext\Classify\Type\Url($client);
+$urls = ['http://www.cnn.com', 'http://www.econtext.ai', 'http://www.nytimes.com'];
+$url->setData($urls);
+$results = $url->classify(3); # classify all pages at once
 
-    $i = 0;
-    foreach($results->yieldResults() as $url_result) {
-        echo $urls[$i++] . PHP_EOL;
-        echo $url_result['title'] . PHP_EOL;
-        echo "Categories:" . PHP_EOL;
-        foreach($url_result['scored_categories'] as $scored_category) {
-            echo "  " . $results->getCategory($scored_category['category_id'])['name'] . " : " . $scored_category['score'] . PHP_EOL
-        }
+$i = 0;
+foreach($results->yieldResults() as $url_result) {
+    echo $urls[$i++] . PHP_EOL;
+    echo $url_result['title'] . PHP_EOL;
+    echo "Categories:" . PHP_EOL;
+    foreach($url_result['scored_categories'] as $scored_category) {
+        echo "  " . $results->getCategory($scored_category['category_id'])['name'] . " : " . $scored_category['score'] . PHP_EOL
     }
+}
 ```
 
 The output from the above calls should look like this:
