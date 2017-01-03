@@ -93,7 +93,7 @@ class Result {
     protected function loadPage($data) {
         $this->body = $data;
         $this->error = $this->get('error', $data[Client::JSON_OUTER_ELEMENT], null);
-        return null;
+        return True;
     }
     
     public function getBody() {
@@ -144,8 +144,8 @@ class Result {
      */
     public function yieldResults() {
         while(($result = $this->loadPage($this->getPage())) !== null) {
-            foreach($this->results as $result) {
-                yield $result;
+            foreach($this->results as $x) {
+                yield $x;
             }
         }
         return;

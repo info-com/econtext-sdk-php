@@ -12,7 +12,15 @@ class Client {
     private $baseuri;
     private $guzzleClient;
     protected $statusCallback;
-	
+
+    /**
+     * Client constructor.
+     *
+     * @param $username API Username
+     * @param $password API Password
+     * @param string $baseuri Base uri for the API
+     * @param null $statusCallback A callback function which is called after each API request.
+     */
 	public function __construct($username, $password, $baseuri="https://api.econtext.com", $statusCallback=null) {
 		$this->username = $username;
 		$this->password = $password;

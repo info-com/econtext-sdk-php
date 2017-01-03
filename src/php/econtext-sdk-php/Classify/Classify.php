@@ -40,7 +40,8 @@ abstract class Classify {
      * If $iterable is a File, yield each line, else yield each item in the
      * array.  This allows us to go through a file, or a list pretty easily.
      * 
-     * @param type $iterable
+     * @param \Iterator $iterable
+     * @return mixed the next object in the iteratable
      */
     protected function next(&$iterable) {
         if(is_a($iterable, "\eContext\File\File")) {
@@ -76,8 +77,6 @@ abstract class Classify {
     /**
      * Yield Guzzle client promises
      * 
-     * @param \eContext\File\File|array $input
-     * @param string $type The type key explaining the data going into the eContext API (e.g. "social", "keywords", "url", "html", "text")
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     protected function yieldAsyncCalls() {

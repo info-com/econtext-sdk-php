@@ -49,8 +49,8 @@ class Keywords extends \eContext\Classify\Result {
      */
     public function yieldResults() {
         while(($result = $this->loadPage($this->getPage())) !== null) {
-            foreach($this->results as $result) {
-                yield $result;
+            foreach($this->results as $x) {
+                yield $x;
             }
         }
         return;
