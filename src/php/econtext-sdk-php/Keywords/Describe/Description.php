@@ -1,8 +1,8 @@
 <?php
 
 namespace eContext\Keywords\Describe;
-use eContext\Keywords\Describe\Describe;
 use eContext\Client;
+use eContext\Result;
 
 /**
  * A common interface for classification results.  Will always contain a
@@ -15,7 +15,7 @@ use eContext\Client;
  * of results, they will be pulled into memory, and categories, overlays, and
  * results will be overwritten.
  */
-class Description extends \eContext\Result {
+class Description extends Result {
         
     protected function loadPage($data) {
         if($data === null) {
@@ -24,5 +24,18 @@ class Description extends \eContext\Result {
         parent::loadPage($data);
         $this->results = $this->get(Describe::JSON_INNER_ELEMENT, $data[Client::JSON_OUTER_ELEMENT], array());
         return True;
+    }
+
+    /**
+     * Iterate through a list of social classification results.  Each result
+     * will include keyword flags, if requested, NLP entities, if requested, and
+     * scored_categories and scored_keywords.
+     */
+    public function yieldResults() {
+        foreach($this->yieldPages() as $result) {
+            foreach($this->results as $x) {
+                yield $x;
+            }
+        }
     }
 }

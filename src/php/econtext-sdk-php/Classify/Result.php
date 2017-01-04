@@ -20,6 +20,7 @@ class Result  extends \eContext\Result {
     protected $categories;
     protected $overlay;
     protected $translate;
+    protected $inner;
     
     protected function loadPage($data) {
         parent::loadPage($data);
@@ -28,9 +29,13 @@ class Result  extends \eContext\Result {
         $this->overlay = $this->get('overlay', $this->inner, array());
         $this->translate = $this->get('translate', $this->inner, array());
     }
+
+    public function getInner() {
+        return $this->inner;
+    }
     
-    public function getCategory($cid) {
-        return $this->get($cid, $this->categories);
+    public function getCategory($categoryId) {
+        return $this->get($categoryId, $this->categories);
     }
     
     public function getCategories() {
@@ -43,12 +48,12 @@ class Result  extends \eContext\Result {
      * interested in the overlay for category 1 (Abba Hair Care) in overlay
      * iab2016 (IAB Overlay for 2016).
      * 
-     * @param int $cid  Category ID to lookup
+     * @param int $categoryId  Category ID to lookup
      * @param string $overlayId Overlay ID to lookup
      * @return mixed
      */
-    public function getOverlay($cid, $overlayId) {
-        if(($overlay = $this->get($cid, $this->overlay)) !== null) {
+    public function getOverlay($categoryId, $overlayId) {
+        if(($overlay = $this->get($categoryId, $this->overlay)) !== null) {
             return $this->get($overlayId, $overlay);
         }
         return null;

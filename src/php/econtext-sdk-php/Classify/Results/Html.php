@@ -1,8 +1,7 @@
 <?php
 
 namespace eContext\Classify\Results;
-use eContext\Classify\Classify;
-use eContext\Client;
+use eContext\Classify\Result;
 
 /**
  * A common interface for classification results.  Will always contain a
@@ -15,8 +14,8 @@ use eContext\Client;
  * of results, they will be pulled into memory, and categories, overlays, and
  * results will be overwritten.
  */
-class Html extends \eContext\Classify\Result {
-    
+class Html extends Result {
+
     private $results;
     
     protected function loadPage($data) {
@@ -33,14 +32,13 @@ class Html extends \eContext\Classify\Result {
     }
     
     /**
-     * Iterate through a list of social classification results.  Each result
+     * Iterate through a list of HTML classification results.  Each result
      * will include keyword flags, if requested, NLP entities, if requested, and
      * scored_categories and scored_keywords.
      */
     public function yieldResults() {
-        while(($result = $this->loadPage($this->getPage())) !== null) {
+        foreach($this->yieldPages() as $result) {
             yield $this->results;
         }
-        return;
     }
 }

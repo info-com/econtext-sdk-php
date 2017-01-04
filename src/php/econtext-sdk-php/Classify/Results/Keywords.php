@@ -1,8 +1,7 @@
 <?php
 
 namespace eContext\Classify\Results;
-use eContext\Classify\Classify;
-use eContext\Client;
+use eContext\Classify\Result;
 
 /**
  * A common interface for classification results.  Will always contain a
@@ -15,7 +14,7 @@ use eContext\Client;
  * of results, they will be pulled into memory, and categories, overlays, and
  * results will be overwritten.
  */
-class Keywords extends \eContext\Classify\Result {
+class Keywords extends Result {
     
     private $mappings;
     private $results;
@@ -45,14 +44,13 @@ class Keywords extends \eContext\Classify\Result {
     
     /**
      * Iterate through a list of keyword classification results.  These results
-     * will include flags, if provided, and catgory_id, if provided
+     * will include flags, if provided, and category_id, if provided
      */
     public function yieldResults() {
-        while(($result = $this->loadPage($this->getPage())) !== null) {
+        foreach($this->yieldPages() as $result) {
             foreach($this->results as $x) {
                 yield $x;
             }
         }
-        return;
     }
 }

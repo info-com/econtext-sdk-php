@@ -1,8 +1,9 @@
 <?php
 
 namespace eContext\Classify;
+use eContext\ApiCall;
 
-abstract class Classify {
+abstract class Classify extends ApiCall {
     
     const JSON_INNER_ELEMENT = "classify";
     const URL_REQUEST_BASE = "/v2/classify";
@@ -35,53 +36,16 @@ abstract class Classify {
     public function setParameter($key, $value) {
         $this->input[$key] = $value;
     }
-    
-    /**
-     * If $iterable is a File, yield each line, else yield each item in the
-     * array.  This allows us to go through a file, or a list pretty easily.
-     * 
-     * @param \Iterator $iterable
-     * @return mixed the next object in the iteratable
-     */
-    protected function next(&$iterable) {
-        if(is_a($iterable, "\eContext\File\File")) {
-            return $iterable->readline();
-        } else {
-            $n = current($iterable);
-            next($iterable);
-            return $n;
-        }
-    }
-    
-    /**
-     * Chunk the data
-     * @param mixed $input
-     * @return mixed
-     */
-    protected function chunkData(&$input) {
-        // array limit == 1, then just return the next item
-        if(static::ARRAY_LIMIT == 1) {
-            return $this->next($input);
-        }
-        
-        $data = array();
-        while (count($data) < static::ARRAY_LIMIT and ($line = $this->next($input)) !== false) {
-            $data[] = $line;
-        }
-        if(count($data) == 0) {
-            return;
-        }
-        return $data;
-    }
-    
+
     /**
      * Yield Guzzle client promises
-     * 
+     *
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     protected function yieldAsyncCalls() {
         $i = 0;
         while(true) {
+            # echo $i . " chunking data...".PHP_EOL;
             $data = $this->chunkData($this->data);
             if($data == false) {
                 return;

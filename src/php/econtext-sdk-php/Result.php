@@ -35,7 +35,7 @@ class Result {
     
     protected $error = null;
     protected $body = null;
-    
+    protected $results = null;
     
     public function __construct($tempDir=null) {
         $this->tempDir = $tempDir != null ?: $this->createDefaultTempDir();
@@ -87,6 +87,7 @@ class Result {
         while(($line = $tempFile->readline()) != false) {
             $fileContents[] = $line;
         }
+        $tempFile->close();
         return json_decode(implode("\n", $fileContents), true);
     }
     
@@ -138,16 +139,28 @@ class Result {
         }
         return $haystack[$needle];
     }
-    
+
     /**
-     * Iterate through a a list of result pages
+     * Iterate through the existing result pages.  This advances the currentPage parameter and reads through saved
+     * temp files with result data.  Each time getPage is called (inside this generator) the content of this objects
+     * body and error (and possibly other parameters) are updated.
+     *
+     * @return \Generator
+     */
+    public function yieldPages() {
+        while($this->loadPage(($result = $this->getPage())) !== null) {
+            yield $result;
+        }
+    }
+
+    /**
+     * Iterate through a list of social classification results.  Each result
+     * will include keyword flags, if requested, NLP entities, if requested, and
+     * scored_categories and scored_keywords.
      */
     public function yieldResults() {
-        while(($result = $this->loadPage($this->getPage())) !== null) {
-            foreach($this->results as $x) {
-                yield $x;
-            }
+        foreach($this->yieldPages() as $result) {
+            yield $result;
         }
-        return;
     }
 }

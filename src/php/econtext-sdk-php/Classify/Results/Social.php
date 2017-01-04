@@ -1,8 +1,7 @@
 <?php
 
 namespace eContext\Classify\Results;
-use eContext\Classify\Classify;
-use eContext\Client;
+use eContext\Classify\Result;
 
 /**
  * A common interface for classification results.  Will always contain a
@@ -15,7 +14,7 @@ use eContext\Client;
  * of results, they will be pulled into memory, and categories, overlays, and
  * results will be overwritten.
  */
-class Social extends \eContext\Classify\Result {
+class Social extends Result {
     
     private $results;
     
@@ -34,11 +33,10 @@ class Social extends \eContext\Classify\Result {
      * scored_categories and scored_keywords.
      */
     public function yieldResults() {
-        while(($result = $this->loadPage($this->getPage())) !== null) {
+        foreach($this->yieldPages() as $result) {
             foreach($this->results as $x) {
                 yield $x;
             }
         }
-        return;
     }
 }
