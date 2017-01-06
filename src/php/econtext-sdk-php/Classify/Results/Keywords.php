@@ -16,9 +16,8 @@ use eContext\Classify\Result;
  */
 class Keywords extends Result {
     
-    private $mappings;
-    private $results;
-    
+    protected $mappings;
+
     protected function loadPage($data) {
         if($data === null) {
             return null;

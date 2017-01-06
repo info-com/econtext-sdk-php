@@ -19,24 +19,6 @@ class Describe extends ApiCall {
     protected $client;
     protected $input;
     
-    public function __construct($client=null, $data=null) {
-        $this->client = $client;
-        $this->input = array();
-    }
-    
-    public function setData($data) {
-        $this->data = $data;
-        return $this;
-    }
-    
-    public function setParameters(array $parameters=array()) {
-        $this->input = $parameters;
-    }
-    
-    public function setParameter($key, $value) {
-        $this->input[$key] = $value;
-    }
-    
     /**
      * Yield Guzzle client promises
      * 
@@ -78,7 +60,7 @@ class Describe extends ApiCall {
      */
     public function describe($concurrency=1, array $params=array()) {
         if($this->data == null) {
-            throw new \Exception("Can't classify an empty dataset");
+            throw new \Exception("Can't describe an empty dataset");
         }
         if(!empty($params)) {
             $this->input = $params;

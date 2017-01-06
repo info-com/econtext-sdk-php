@@ -15,9 +15,7 @@ use eContext\Classify\Result;
  * results will be overwritten.
  */
 class Text extends Result {
-    
-    private $results;
-    
+
     protected function loadPage($data) {
         if($data === null) {
             return null;

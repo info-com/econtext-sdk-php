@@ -16,26 +16,6 @@ abstract class Classify extends ApiCall {
     protected $response;
     protected $requestUrl;
     protected $start;
-    protected $client;
-    protected $input;
-    
-    public function __construct($client=null, $data=null) {
-        $this->client = $client;
-        $this->input = array();
-    }
-    
-    public function setData($data) {
-        $this->data = $data;
-        return $this;
-    }
-    
-    public function setParameters(array $parameters=array()) {
-        $this->input = $parameters;
-    }
-    
-    public function setParameter($key, $value) {
-        $this->input[$key] = $value;
-    }
 
     /**
      * Yield Guzzle client promises
@@ -45,12 +25,11 @@ abstract class Classify extends ApiCall {
     protected function yieldAsyncCalls() {
         $i = 0;
         while(true) {
-            # echo $i . " chunking data...".PHP_EOL;
             $data = $this->chunkData($this->data);
             if($data == false) {
                 return;
             }
-            # echo $i . " " . static::URL_REQUEST_BASE.static::URL_REQUEST_CLASS . PHP_EOL;
+            $this->addCallSize(count($data));
             $input = $this->input;
             $input['async'] = false;
             $input[static::CLASSIFY_TYPE] = $data;
@@ -86,6 +65,7 @@ abstract class Classify extends ApiCall {
             $this->input = $params;
         }
         $resultSet = $this->client->runPool($this->yieldAsyncCalls(), $this->newResultSet(), $concurrency);
+        $resultSet->addCallSizes($this->callSizes);
         return $resultSet;
     }
 }

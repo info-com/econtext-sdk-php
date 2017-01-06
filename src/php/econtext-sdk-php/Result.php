@@ -32,15 +32,32 @@ class Result {
      * @var int Current Page of results
      */
     protected $currentPage = 0;
+
+    /**
+     * @var null|array A callSizes array, assigned after an API task to guide in the yieldResults functionality
+     */
+    protected $callSizes = null;
     
     protected $error = null;
     protected $body = null;
     protected $results = null;
-    
+
+    /**
+     * Setup a new Result set
+     *
+     * @param null|string $tempDir if a tempDir is specified, it should already exist.  Otherwise we'll attempt to create one for you.
+     */
     public function __construct($tempDir=null) {
         $this->tempDir = $tempDir != null ?: $this->createDefaultTempDir();
     }
-    
+
+    /**
+     * Create a temporary directory to store result files.  If we are unable to create a temporary directory, result
+     * files will be written directly to the system temp dir (supplied by sys_get_temp_dir) and we won't attempt to
+     * remove it when we're done.
+     *
+     * @return null|string The filepath to the temp directory if we were able to create it.
+     */
     private function createDefaultTempDir() {
         $dir = \sys_get_temp_dir() . '/econtext-' . \uniqid() . "/";
         if(mkdir($dir)) {
@@ -48,7 +65,10 @@ class Result {
         }
         return null;
     }
-    
+
+    /**
+     * Unlink tempFiles and remove the tempDir if it was created for this call.
+     */
     public function __destruct() {
         if($this->tempDir != null) {
             foreach($this->tempFiles as $tempFile) {
@@ -74,10 +94,8 @@ class Result {
     protected function getPage($index=null) {
         if($index === null) {
             $index = $this->currentPage++;
-            #echo "index is null - get new index: {$index}".PHP_EOL;
         }
         if($index >= count($this->tempFiles)) {
-            #echo "{$index} >= ".count($this->tempFiles).PHP_EOL;
             $this->currentPage = null;
             return null;
         }
@@ -132,7 +150,24 @@ class Result {
             $this->tempFiles[] = $tempFile;
         }
     }
-    
+
+    /**
+     * Add call sizes to this result set
+     *
+     * @param $callSizes
+     */
+    public function addCallSizes($callSizes) {
+        $this->callSizes = $callSizes;
+    }
+
+    /**
+     * Utility function to get an item from an associative array.
+     *
+     * @param mixed $needle Search for this key
+     * @param array $haystack Search in this associative array
+     * @param mixed $default A default value if the key does not exist
+     * @return mixed
+     */
     public function get($needle, $haystack, $default=null) {
         if(!array_key_exists($needle, $haystack)) {
             return $default;

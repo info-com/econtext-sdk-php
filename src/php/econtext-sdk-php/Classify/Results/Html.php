@@ -16,8 +16,6 @@ use eContext\Classify\Result;
  */
 class Html extends Result {
 
-    private $results;
-    
     protected function loadPage($data) {
         if($data === null) {
             return null;

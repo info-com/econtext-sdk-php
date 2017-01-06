@@ -15,15 +15,17 @@ use eContext\Classify\Result;
  * results will be overwritten.
  */
 class Social extends Result {
-    
-    private $results;
-    
+
     protected function loadPage($data) {
         if($data === null) {
             return null;
         }
         parent::loadPage($data);
-        $this->results = $this->get('results', $this->inner, array());
+        $default = array();
+        if($this->callSizes != null && $this->hasError()) {
+            $default = array_pad(array(), $this->callSize[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
+        }
+        $this->results = $this->get('results', $this->inner, $default);
         return True;
     }
     

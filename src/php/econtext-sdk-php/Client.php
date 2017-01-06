@@ -18,10 +18,10 @@ class Client {
      *
      * @param $username API Username
      * @param $password API Password
-     * @param string $baseuri Base uri for the API
      * @param null $statusCallback A callback function which is called after each API request.
+     * @param string $baseuri Base uri for the API
      */
-	public function __construct($username, $password, $baseuri="https://api.econtext.com", $statusCallback=null) {
+	public function __construct($username, $password, $statusCallback=null, $baseuri="https://api.econtext.com") {
 		$this->username = $username;
 		$this->password = $password;
         $this->baseuri = $baseuri;
@@ -33,8 +33,23 @@ class Client {
                 "Content-Type" => "application/json"
             ],
         ]);
+        $this->checkLogin();
         $this->statusCallback = $statusCallback;
 	}
+
+    /**
+     * @throws \Exception Fails if credentials are incorrect
+     */
+	private function checkLogin() {
+	    try {
+	        $this->guzzleClient->get('v2/user/attributes');
+	    } catch (GuzzleHttp\Exception\ClientException $exception) {
+	        if($exception->getCode() == '401') {
+	            throw new \Exception("Your API login credentials appear invalid.  Please check your username and password and try again");
+            }
+            throw $exception;
+        }
+    }
     
     /**
      * Sets a callback function which is called after each API request.  You can
@@ -43,12 +58,17 @@ class Client {
      * sequence id for that call (e.g. $data[4]).  The second is the Guzzle
      * response object for that call.
      * 
-     * @param type $statusCallback
+     * @param callable $statusCallback
      */
     public function setStatusCallback($statusCallback) {
         $this->statusCallback = $statusCallback;
     }
-    
+
+    /**
+     * Expose the GuzzleHttp\Client that the eContext\Client makes use
+     * of to interact with the system
+     * @return GuzzleHttp\Client
+     */
     public function getGuzzleClient() {
         return $this->guzzleClient;
     }
@@ -58,9 +78,14 @@ class Client {
      * requests at once, using Guzzle's Pool functionality to achieve 
      * concurrency.  This call only works for classification calls - URIs in the
      * API beginning with /v2/classify
+     *
+     * @param callable $yieldAsyncCalls A generator to pass into GuzzleHttp\Pool
+     * @param Result A result object to save results into
+     * @param int $concurrency How many async calls to run in parallel
+     * @return Result A result object with saved results
      */
     public function runPool($yieldAsyncCalls, $resultSet=None, $concurrency=1) {
-        $pool = new \GuzzleHttp\Pool($this->guzzleClient, $yieldAsyncCalls, [
+        $pool = new GuzzleHttp\Pool($this->guzzleClient, $yieldAsyncCalls, [
             'concurrency' => $concurrency,
             'fulfilled' => function ($response, $index) use ($resultSet) {
                 $resultSet->addResultSet((string)$response->getBody(), $index);
