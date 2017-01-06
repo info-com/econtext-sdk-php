@@ -23,7 +23,7 @@ class Social extends Result {
         parent::loadPage($data);
         $default = array();
         if($this->callSizes != null && $this->hasError()) {
-            $default = array_pad(array(), $this->callSize[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
+            $default = array_pad(array(), $this->callSizes[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
         }
         $this->results = $this->get('results', $this->inner, $default);
         return True;

@@ -23,8 +23,13 @@ class Keywords extends Result {
             return null;
         }
         parent::loadPage($data);
-        $this->mappings = $this->get('mappings', $this->inner, array());
-        $this->results = $this->get('results', $this->inner, array());
+        $defaultMappings = array();
+        $defaultResults = array();
+        if($this->callSizes != null && $this->hasError()) {
+            $defaultResults = array_pad(array(), $this->callSizes[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
+        }
+        $this->results = $this->get('results', $this->inner, $defaultResults);
+        $this->mappings = $this->get('mappings', $this->inner, $defaultMappings);
         return True;
     }
     
