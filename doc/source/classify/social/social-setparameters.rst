@@ -24,11 +24,14 @@ Returns the :ref:`classify-keywords` object for method chaining
 Examples
 ^^^^^^^^
 
-Example #1 Set "flags" parameter to ``true``
+Example #1
+""""""""""
+
+Set "flags" parameter to ``true``
 
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $classify = new eContext\Classify\Keywords($client);
+    $classify = new eContext\Classify\Social($client);
     $classify->setParameters(['flags' => true]);
 

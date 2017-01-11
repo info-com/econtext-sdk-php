@@ -8,7 +8,7 @@ Description
 
 .. code-block:: php
 
-    public Url Url::setParameters(array $parameters = array())
+    public Html Html::setParameters(array $parameters = array())
 
 Parameters
 ^^^^^^^^^^
@@ -19,7 +19,7 @@ $parameters
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-url` object for method chaining
+Returns the :ref:`classify-html` object for method chaining
 
 Examples
 ^^^^^^^^
@@ -32,6 +32,6 @@ Set "flags" parameter to ``true``
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $classify = new eContext\Classify\Url($client);
+    $classify = new eContext\Classify\Html($client);
     $classify->setParameters(['entities' => true]);
 

@@ -1,19 +1,17 @@
-.. _classify-classify:
+eContext\\Classify
+==================
 
-eContext\\Classify\\Classify
-============================
-
-Classify is an abstract class which extends :ref:`api-call`.
-
-.. toctree::
-    :caption: Inherited Methods
-    :maxdepth: 1
-    :glob:
-
-    apicall-*
+Use the listed classes to classify various structured and unstructured text into actionable data using the eContext API.
+Typically, you should pick the classification class which best matches the data you want to submit.  For example, if you
+have HTML content pages, you should use :doc:`html/html`.  If you have short-form text like Tweets or 1-2 paragraph
+posts, use :doc:`social/social`.  Longer form text should be submitted using :doc:`text/text`.
 
 .. toctree::
-    :caption: Methods
     :maxdepth: 1
 
-    classify-classify
+    html/html
+    keywords/keywords
+    social/social
+    text/text
+    url/url
+    parameters

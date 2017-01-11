@@ -1,12 +1,18 @@
 .. _classify-keywords:
 
-eContext\\Classify\\Type\\Keywords
-==================================
+eContext\\Classify\\Keywords
+============================
 
 Keywords allows a user to quickly classify a list of keywords
 
+Methods
+^^^^^^^
+
 .. toctree::
-    :caption: Methods
     :maxdepth: 1
 
-    keywords-*
+    keywords-construct
+    keywords-classify
+    keywords-setdata
+    keywords-setparameter
+    keywords-setparameters

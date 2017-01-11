@@ -1,7 +1,6 @@
 <?php
 
-namespace eContext\Classify\Type;
-use eContext\Classify\Classify;
+namespace eContext\Classify;
 
 class Text extends Classify {
     
@@ -10,6 +9,6 @@ class Text extends Classify {
     const ARRAY_LIMIT = 1;
     
     protected function newResultSet() {
-        return new \eContext\Classify\Results\Text();
+        return new Results\Text();
     }
 }

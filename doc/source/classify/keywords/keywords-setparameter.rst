@@ -8,13 +8,13 @@ Description
 
 .. code-block:: php
 
-    public ApiCall ApiCall::setParameter($key, $value)
+    public Keywords Keywords::setParameter($key, $value)
 
 Parameters
 ^^^^^^^^^^
 
 $key
-    The name of the parameter to set
+    The name of the :ref:`classify-parameters` to set.
 
 $value
     The value of the parameter
@@ -22,16 +22,19 @@ $value
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`api-call` object for method chaining
+Returns the :ref:`classify-keywords` object for method chaining
 
 Examples
 ^^^^^^^^
 
-Example #1 Set "entities" parameter to ``true``
+Example #1
+""""""""""
+
+Set "flags" parameter to ``true``
 
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $apicall = new eContext\ApiCall($client);
-    $apicall->setParameter('entities', true);
+    $classify = new eContext\Keywords($client);
+    $classify->setParameter('flags', true);
 

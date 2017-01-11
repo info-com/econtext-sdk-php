@@ -8,7 +8,7 @@ Description
 
 .. code-block:: php
 
-    public Keywords Keywords::setParameters(array $parameters = array())
+    public Text Text::setParameters(array $parameters = array())
 
 Parameters
 ^^^^^^^^^^
@@ -19,7 +19,7 @@ $parameters
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-keywords` object for method chaining
+Returns the :ref:`classify-text` object for method chaining
 
 Examples
 ^^^^^^^^
@@ -32,6 +32,6 @@ Set "flags" parameter to ``true``
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $classify = new eContext\Classify\Social($client);
+    $classify = new eContext\Classify\Text($client);
     $classify->setParameters(['flags' => true]);
 

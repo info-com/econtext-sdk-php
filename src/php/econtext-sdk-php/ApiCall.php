@@ -30,10 +30,12 @@ abstract class ApiCall {
 
     public function setParameters(array $parameters=array()) {
         $this->input = $parameters;
+        return $this;
     }
 
     public function setParameter($key, $value) {
         $this->input[$key] = $value;
+        return $this;
     }
 
     /**

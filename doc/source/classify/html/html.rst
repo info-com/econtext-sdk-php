@@ -1,9 +1,9 @@
-.. _classify-url:
+.. _classify-html:
 
-eContext\\Classify\\Url
-=======================
+eContext\\Classify\\Html
+========================
 
-Url allows a user to quickly retrieve and classify a list of URLs.
+Html allows a user to quickly retrieve and classify a list of HTML documents.
 
 Methods
 ^^^^^^^
@@ -11,8 +11,8 @@ Methods
 .. toctree::
     :maxdepth: 1
 
-    url-construct
-    url-classify
-    url-setdata
-    url-setparameter
-    url-setparameters
+    html-construct
+    html-classify
+    html-setdata
+    html-setparameter
+    html-setparameters

@@ -1,9 +1,11 @@
-.. _classify-social:
+.. _classify-text:
 
-eContext\\Classify\\Social
-==========================
+eContext\\Classify\\Text
+========================
 
-Social allows a user to quickly classify a list of social posts
+Text allows a user to quickly classify a list of longer-form text.  In general, you should use :ref:`classify-social`
+when the length of your content is a paragraph or two and :ref:`classify-text` when the content is longer, but does not
+contain any markup.
 
 Methods
 ^^^^^^^
@@ -11,8 +13,8 @@ Methods
 .. toctree::
     :maxdepth: 1
 
-    social-construct
-    social-classify
-    social-setdata
-    social-setparameter
-    social-setparameters
+    text-construct
+    text-classify
+    text-setdata
+    text-setparameter
+    text-setparameters

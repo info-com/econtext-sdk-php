@@ -8,7 +8,7 @@ Description
 
 .. code-block:: php
 
-    public Social Social::setParameter($key, $value)
+    public Text Text::setParameter($key, $value)
 
 Parameters
 ^^^^^^^^^^
@@ -22,7 +22,7 @@ $value
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-social` object for method chaining
+Returns the :ref:`classify-text` object for method chaining
 
 Examples
 ^^^^^^^^
@@ -35,6 +35,6 @@ Set "flags" parameter to ``true``
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $classify = new eContext\Social($client);
+    $classify = new eContext\Text($client);
     $classify->setParameter('flags', true);
 

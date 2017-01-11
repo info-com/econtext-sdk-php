@@ -1,23 +1,23 @@
 setData
 =======
 
-Set the list of urls that will be passed along to the eContext API for classification.
+Set the list of HTML documents that will be passed along to the eContext API for classification.
 
 Description
 ^^^^^^^^^^^
 
 .. code-block:: php
 
-    public Url Url::setData($data)
+    public Html Html::setData($data)
 
 Parameters
 ^^^^^^^^^^
 
 $data
-    A list of urls that will be retrieved and classified
+    A list of HTML documents that will be classified
 
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-url` object for method chaining
+Returns the :ref:`classify-html` object for method chaining
 

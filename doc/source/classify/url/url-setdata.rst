@@ -1,23 +1,23 @@
 setData
 =======
 
-Set the list of long-form text posts that will be passed along to the eContext API.
+Set the list of URLs that will be passed along to the eContext API for classification.
 
 Description
 ^^^^^^^^^^^
 
 .. code-block:: php
 
-    public Text Text::setData($data)
+    public Url Url::setData($data)
 
 Parameters
 ^^^^^^^^^^
 
 $data
-    A list of text (long-form) posts that will be classified
+    A list of urls that will be retrieved and classified
 
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-text` object for method chaining
+Returns the :ref:`classify-url` object for method chaining
 

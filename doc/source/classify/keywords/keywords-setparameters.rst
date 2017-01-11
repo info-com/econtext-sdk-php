@@ -8,27 +8,30 @@ Description
 
 .. code-block:: php
 
-    public ApiCall ApiCall::setParameters(array $parameters = array())
+    public Keywords Keywords::setParameters(array $parameters = array())
 
 Parameters
 ^^^^^^^^^^
 
 $parameters
-    A list of key=>value pairs describing parameters to be included with the eContext API call.
+    A list of key=>value pairs describing :ref:`classify-parameters` to be included with the eContext API call.
 
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`api-call` object for method chaining
+Returns the :ref:`classify-keywords` object for method chaining
 
 Examples
 ^^^^^^^^
 
-Example #1 Set "entities" parameter to ``true``
+Example #1
+""""""""""
+
+Set "flags" parameter to ``true``
 
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $apicall = new eContext\ApiCall($client);
-    $apicall->setParameters(['entities' => true]);
+    $classify = new eContext\Classify\Keywords($client);
+    $classify->setParameters(['flags' => true]);
 

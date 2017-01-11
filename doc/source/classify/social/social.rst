@@ -1,9 +1,9 @@
-.. _classify-keywords:
+.. _classify-social:
 
-eContext\\Classify\\Keywords
-============================
+eContext\\Classify\\Social
+==========================
 
-Keywords allows a user to quickly classify a list of keywords
+Social allows a user to quickly classify a list of social posts
 
 Methods
 ^^^^^^^
@@ -11,8 +11,8 @@ Methods
 .. toctree::
     :maxdepth: 1
 
-    keywords-construct
-    keywords-classify
-    keywords-setdata
-    keywords-setparameter
-    keywords-setparameters
+    social-construct
+    social-classify
+    social-setdata
+    social-setparameter
+    social-setparameters

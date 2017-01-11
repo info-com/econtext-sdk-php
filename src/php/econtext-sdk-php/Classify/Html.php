@@ -1,7 +1,6 @@
 <?php
 
-namespace eContext\Classify\Type;
-use eContext\Classify\Classify;
+namespace eContext\Classify;
 
 class Html extends Classify {
     
@@ -10,6 +9,6 @@ class Html extends Classify {
     const ARRAY_LIMIT = 1;
     
     protected function newResultSet() {
-        return new \eContext\Classify\Results\Html();
+        return new Results\Html();
     }
 }

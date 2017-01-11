@@ -8,7 +8,7 @@ Description
 
 .. code-block:: php
 
-    public Url Url::setParameter($key, $value)
+    public Html Html::setParameter($key, $value)
 
 Parameters
 ^^^^^^^^^^
@@ -22,7 +22,7 @@ $value
 Return Values
 ^^^^^^^^^^^^^
 
-Returns the :ref:`classify-url` object for method chaining
+Returns the :ref:`classify-html` object for method chaining
 
 Examples
 ^^^^^^^^
@@ -35,6 +35,6 @@ Set "entities" parameter to ``true``
 .. code-block:: php
 
     $client = new eContext\Client(ECONTEXT_USERNAME, ECONTEXT_PASSWORD);
-    $classify = new eContext\Url($client);
+    $classify = new eContext\Html($client);
     $classify->setParameter('entities', true);
 

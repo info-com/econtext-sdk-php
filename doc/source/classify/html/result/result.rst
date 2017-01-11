@@ -1,9 +1,10 @@
-.. url-results:
+.. _html-results:
 
-eContext\\Classify\\Results\\Url
-================================
+eContext\\Classify\\Results\\Html
+=================================
 
-Result set object for :ref:`classify-url` requests.  This class extends the :ref:`result-result` base class.
+Result set object for :ref:`classify-html` and :ref:`classify-url` requests.  This class extends the
+:ref:`result-result` base class.
 
 .. toctree::
     :maxdepth: 1
@@ -20,7 +21,6 @@ Result set object for :ref:`classify-url` requests.  This class extends the :ref
     :glob:
 
     ../../result/get*
-    ../../result/yield*
 
 .. toctree::
     :maxdepth: 1

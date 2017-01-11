@@ -2,12 +2,15 @@ eContext SDK PHP documentation
 ==============================
 
 .. toctree::
-:maxdepth: 2
+    :maxdepth: 2
 
-        introduction
-        quickstart
-        client
-        changelog
+    introduction
+    installation
+    quickstart
+    client/client
+    classify/classify
+    result/result
+    changelog
 
 Indices and tables
 ==================
