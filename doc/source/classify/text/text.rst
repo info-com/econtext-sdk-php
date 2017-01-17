@@ -18,3 +18,10 @@ Methods
     text-setdata
     text-setparameter
     text-setparameters
+
+Results from the :doc:`text-classify` method are described below:
+
+.. toctree::
+    :maxdepth: 2
+
+    result/result

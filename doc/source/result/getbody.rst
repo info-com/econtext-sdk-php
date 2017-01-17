@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public array Result::getBody()
+    public array Result::getBody( void )
 
 Retrieve the entire body content of the currently loaded API result page.
 

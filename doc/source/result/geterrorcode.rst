@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public int Result::getErrorCode()
+    public int Result::getErrorCode( void )
 
 Parameters
 ^^^^^^^^^^

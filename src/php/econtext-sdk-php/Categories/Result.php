@@ -27,9 +27,7 @@ class Result extends eContext\Result {
      */
     public function yieldResults() {
         foreach($this->yieldPages() as $result) {
-            foreach($this->results as $x) {
-                yield $x;
-            }
+            yield $this->results;
         }
     }
     

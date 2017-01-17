@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public string Result::getErrorMessage()
+    public string Result::getErrorMessage( void )
 
 Parameters
 ^^^^^^^^^^

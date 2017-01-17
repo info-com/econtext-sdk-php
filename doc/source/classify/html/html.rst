@@ -16,3 +16,10 @@ Methods
     html-setdata
     html-setparameter
     html-setparameters
+
+Results from the :doc:`html-classify` method are described below:
+
+.. toctree::
+    :maxdepth: 2
+
+    result/result

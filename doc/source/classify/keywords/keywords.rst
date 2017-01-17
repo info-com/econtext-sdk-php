@@ -16,3 +16,10 @@ Methods
     keywords-setdata
     keywords-setparameter
     keywords-setparameters
+
+Results from the :doc:`keywords-classify` method are described below:
+
+.. toctree::
+    :maxdepth: 2
+
+    results/results

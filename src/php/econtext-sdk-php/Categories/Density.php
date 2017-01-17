@@ -21,6 +21,7 @@ class Density extends ApiCall {
     
     public function __construct($client=null, $data=null) {
         $this->client = $client;
+        $this->setData($data);
     }
     
     public function setData($data) {

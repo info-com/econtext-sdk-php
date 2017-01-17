@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public bool Result::hasError()
+    public bool Result::hasError( void )
 
 Parameters
 ^^^^^^^^^^

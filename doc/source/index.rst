@@ -8,7 +8,10 @@ eContext SDK PHP documentation
     installation
     quickstart
     client/client
+    categories/density
     classify/classify
+    keywords/describe/describe
+    keywords/search/search
     result/result
     changelog
 

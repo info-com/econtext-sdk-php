@@ -16,3 +16,10 @@ Methods
     url-setdata
     url-setparameter
     url-setparameters
+
+Results from the :doc:`url-classify` method are described below:
+
+.. toctree::
+    :maxdepth: 2
+
+    ../html/result/result

@@ -8,7 +8,7 @@ Description
 
 .. code-block:: php
 
-    public eContext\Classify\Results\Social Social::classify( [$concurrency = 1 [, $params = array() ]] )
+    public eContext\Classify\Results\Social Social::classify( [$concurrency = 1 [, array $params = array() ]] )
 
 Parameters
 ^^^^^^^^^^

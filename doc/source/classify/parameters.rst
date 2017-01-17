@@ -36,7 +36,7 @@ classification_type (``enum``)
 translate (``array``)
     If your content is in a language other than english, you can enter a translation parameter to run it through either
     a third-party translation provider, or use eContext's built in Machine Translation services.  More information about
-    the translation services can be found in the `eContext API Translation` documentation.
+    the translation services can be found in the `eContext API Translation`_ documentation.
 
     Each translation parameter should include two items.
 

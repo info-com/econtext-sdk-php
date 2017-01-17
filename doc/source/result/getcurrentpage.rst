@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public int Result::getCurrentPage()
+    public int Result::getCurrentPage( void )
 
 Parameters
 ^^^^^^^^^^

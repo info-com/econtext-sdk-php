@@ -16,3 +16,10 @@ Methods
     social-setdata
     social-setparameter
     social-setparameters
+
+Results from the :doc:`social-classify` method are described below:
+
+.. toctree::
+    :maxdepth: 2
+
+    results/results

@@ -6,7 +6,7 @@ Description
 
 .. code-block:: php
 
-    public generator Result::yieldPages()
+    public generator Result::yieldPages( void )
 
 A generator which loads a page and returns the body content of each page.  Each iteration resets the contents of the
 Result, which means that :doc:`getbody` and :doc:`getcurrentpage` and other items will be updated.
