@@ -12,6 +12,7 @@ class Search extends ApiCall {
 
     protected $searchUri;
     protected $pages;
+    protected $count;
 
     protected function chunkData(&$input) {
         return $input;
@@ -25,10 +26,12 @@ class Search extends ApiCall {
      */
     protected function yieldAsyncCalls() {
         $search = $this;
-        foreach($this->pages as $pageId) {
-            yield $pageId-1 => function() use ($search, $pageId) {
-                return $this->client->getGuzzleClient()->getAsync("{$search->searchUri}?page={$pageId}");
-            };
+        if($this->count != null) {
+            foreach ($this->pages as $pageId) {
+                yield $pageId - 1 => function () use ($search, $pageId) {
+                    return $this->client->getGuzzleClient()->getAsync("{$search->searchUri}?page={$pageId}");
+                };
+            }
         }
     }
 
@@ -67,6 +70,7 @@ class Search extends ApiCall {
             throw new \Exception("An error occurred");
         }
         $this->searchUri = $response[Client::JSON_OUTER_ELEMENT][self::JSON_INNER_ELEMENT]['result_uri'];
+        $this->count = $response[Client::JSON_OUTER_ELEMENT][self::JSON_INNER_ELEMENT]['count'];
         $this->pages = range(1, $response[Client::JSON_OUTER_ELEMENT][self::JSON_INNER_ELEMENT]['pages']);
         $resultSet = $this->client->runPool($this->yieldAsyncCalls(), $this->newResultSet(), $concurrency);
         return $resultSet;
