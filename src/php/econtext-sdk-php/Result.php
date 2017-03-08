@@ -48,34 +48,17 @@ class Result {
      * @param null|string $tempDir if a tempDir is specified, it should already exist.  Otherwise we'll attempt to create one for you.
      */
     public function __construct($tempDir=null) {
-        $this->tempDir = $tempDir != null ?: $this->createDefaultTempDir();
+        $this->tempDir = $tempDir;
     }
 
     /**
-     * Create a temporary directory to store result files.  If we are unable to create a temporary directory, result
-     * files will be written directly to the system temp dir (supplied by sys_get_temp_dir) and we won't attempt to
-     * remove it when we're done.
-     *
-     * @return null|string The filepath to the temp directory if we were able to create it.
-     */
-    private function createDefaultTempDir() {
-        $dir = \sys_get_temp_dir() . '/econtext-' . \uniqid() . "/";
-        if(mkdir($dir)) {
-            return $dir;
-        }
-        return null;
-    }
-
-    /**
-     * Unlink tempFiles and remove the tempDir if it was created for this call.
+     * Unlink tempFiles
      */
     public function __destruct() {
-        if($this->tempDir != null) {
-            foreach($this->tempFiles as $tempFile) {
-                $tempFile->unlink();
-            }
-            return rmdir($this->tempDir);
+        foreach($this->tempFiles as $tempFile) {
+            $tempFile->unlink();
         }
+        return null;
     }
     
     public function getCurrentPage() {
@@ -111,7 +94,7 @@ class Result {
     
     protected function loadPage($data) {
         $this->body = $data;
-        $this->error = $this->get('error', $data[Client::JSON_OUTER_ELEMENT], null);
+        $this->error = $this->get('error', $this->body[Client::JSON_OUTER_ELEMENT], null);
         return True;
     }
     

@@ -12,6 +12,8 @@ class Client {
     private $baseuri;
     private $guzzleClient;
     protected $statusCallback;
+    private $tempDir = null;
+    private $tempSubDir = null;
 
     /**
      * Client constructor.
@@ -24,10 +26,11 @@ class Client {
 	public function __construct($username, $password, $statusCallback=null, $baseuri="https://api.econtext.com") {
 		$this->username = $username;
 		$this->password = $password;
-        $this->baseuri = $baseuri;
+        $this->setBaseUri($baseuri);
         $this->guzzleClient = new GuzzleHttp\Client([
             "base_uri" => $this->baseuri,
             "auth" => [$this->username, $this->password],
+            "http_errors" => false,
             "headers" => [
                 "User-Agent" => "eContext API Client (PHP/1.0)",
                 "Content-Type" => "application/json"
@@ -36,6 +39,65 @@ class Client {
         $this->checkLogin();
         $this->statusCallback = $statusCallback;
 	}
+
+    /**
+     * If we created a subdirectory for temporary files - remove them when we're done
+     */
+	public function __destruct() {
+	    unset($this->guzzleClient);
+        if($this->tempSubDir !== null) {
+            rmdir($this->tempSubDir);
+        }
+    }
+
+    public function setBaseUri($baseuri="https://api.econtext.com") {
+	    $this->baseuri = $baseuri;
+	    return $this;
+    }
+
+    public function getBaseUri() {
+	    return $this->baseuri;
+    }
+
+    /**
+     * Set the location of the directory where temporary files should be stored
+     *
+     * @param $tempDir string A path to a tempDirectory
+     */
+	public function setTempDir($tempDir) {
+	    if(is_dir($tempDir)) {
+	        $dir = $tempDir . '/econtext-'.\uniqid() . '/';
+	        if(mkdir($dir)) {
+	            $this->tempSubDir = $dir;
+	            $this->tempDir = $dir;
+            }
+            else {
+                $this->tempDir = $tempDir;
+            }
+        }
+    }
+
+    public function getTempDir() {
+	    if($this->tempDir == null) {
+	        $this->tempDir = $this->createDefaultTempDir();
+        }
+	    return $this->tempDir;
+    }
+
+    /**
+     * Create a temporary directory to store result files.  If we are unable to create a temporary directory, result
+     * files will be written directly to the system temp dir (supplied by sys_get_temp_dir) and we won't attempt to
+     * remove it when we're done.
+     *
+     * @return null|string The filepath to the temp directory if we were able to create it.
+     */
+    private function createDefaultTempDir() {
+        $dir = \sys_get_temp_dir() . '/econtext-' . \uniqid() . "/";
+        if(mkdir($dir)) {
+            return $dir;
+        }
+        return null;
+    }
 
     /**
      * @throws \Exception Fails if credentials are incorrect
@@ -87,21 +149,23 @@ class Client {
     public function runPool($yieldAsyncCalls, $resultSet=None, $concurrency=1) {
         $pool = new GuzzleHttp\Pool($this->guzzleClient, $yieldAsyncCalls, [
             'concurrency' => $concurrency,
-            'fulfilled' => function ($response, $index) use ($resultSet) {
+            'fulfilled' => function ($response, $index) use (&$resultSet) {
                 $resultSet->addResultSet((string)$response->getBody(), $index);
                 if(is_callable($this->statusCallback)) {
                     $this->statusCallback->__invoke($index, $response);
                 }
             },
-            'rejected' => function ($reason, $index) use ($resultSet) {
+            'rejected' => function ($reason, $index) use (&$resultSet) {
+                // this shouldn't get called, because the client has turned off http_errors...
+                $response = $reason->getResponse();
                 if($reason->getCode() == 503) {
                     $body = '{"econtext": {"error": {"message": "503 Service Temporarily Unavailable", "code": 503}}}';
                 } else {
-                    $body = (string)$reason->getResponse()->getBody();
+                    $body = $response->getBody();
                 }
-                $resultSet->addResultSet($body, $index);
+                $resultSet->addResultSet((string)$body, $index);
                 if(is_callable($this->statusCallback)) {
-                    $this->statusCallback->__invoke($index, $reason->getResponse());
+                    $this->statusCallback->__invoke($index, $response);
                 }
             },
         ]);

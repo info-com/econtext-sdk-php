@@ -23,6 +23,12 @@ abstract class ApiCall {
         $this->setData($data);
     }
 
+    public function __destruct() {
+        unset($this->client);
+        unset($this->input);
+        unset($this->data);
+    }
+
     public function setData($data) {
         $this->data = $data;
         return $this;

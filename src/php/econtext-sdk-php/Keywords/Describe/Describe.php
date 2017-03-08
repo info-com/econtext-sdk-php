@@ -47,7 +47,7 @@ class Describe extends ApiCall {
      * @return \eContext\Classify\Result
      */
     protected function newResultSet() {
-        return new Description();
+        return new Description($this->client->getTempDir());
     }
     
     /**

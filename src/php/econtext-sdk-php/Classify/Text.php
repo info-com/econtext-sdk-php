@@ -9,6 +9,6 @@ class Text extends Classify {
     const ARRAY_LIMIT = 1;
     
     protected function newResultSet() {
-        return new Results\Text();
+        return new Results\Text($this->client->getTempDir());
     }
 }

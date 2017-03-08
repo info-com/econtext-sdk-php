@@ -9,6 +9,6 @@ class Url extends Classify {
     const ARRAY_LIMIT = 1;
     
     protected function newResultSet() {
-        return new Results\Html();
+        return new Results\Html($this->client->getTempDir());
     }
 }

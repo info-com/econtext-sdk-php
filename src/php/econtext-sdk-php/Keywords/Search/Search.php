@@ -41,7 +41,7 @@ class Search extends ApiCall {
      * @return \eContext\Keywords\Search\Results
      */
     protected function newResultSet() {
-        return new Results();
+        return new Results($this->client->getTempDir());
     }
 
     /**

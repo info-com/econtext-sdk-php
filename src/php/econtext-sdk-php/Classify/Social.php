@@ -9,6 +9,6 @@ class Social extends Classify {
     const ARRAY_LIMIT = 500;
     
     protected function newResultSet() {
-        return new Results\Social();
+        return new Results\Social($this->client->getTempDir());
     }
 }

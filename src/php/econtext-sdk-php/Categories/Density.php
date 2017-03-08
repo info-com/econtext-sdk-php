@@ -53,7 +53,7 @@ class Density extends ApiCall {
      * @return \eContext\Classify\Result
      */
     protected function newResultSet() {
-        return new Result();
+        return new Result($this->client->getTempDir());
     }
     
     /**
