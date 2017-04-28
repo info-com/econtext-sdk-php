@@ -102,6 +102,16 @@ class Result {
         return $this->body;
     }
     
+    /**
+     * Set the body content directly
+     *
+     * @param array $body An associative array containing the response body
+     * @return bool
+     */
+    public function setBody($body) {
+        return $this->loadPage($body);
+    }
+    
     public function hasError() {
         return $this->error != null;
     }
