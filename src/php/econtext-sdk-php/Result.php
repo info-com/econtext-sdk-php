@@ -40,6 +40,7 @@ class Result {
     
     protected $error = null;
     protected $body = null;
+    protected $raw = null;
     protected $results = null;
 
     /**
@@ -89,7 +90,20 @@ class Result {
             $fileContents[] = $line;
         }
         $tempFile->close();
-        return json_decode(implode("\n", $fileContents), true);
+        $this->raw = implode("\n", $fileContents);
+        $json = json_decode($this->raw, true);
+        if(!$json) {
+            $json = [
+                Client::JSON_OUTER_ELEMENT => [
+                    'error' => $this->raw
+                ]
+            ];
+        }
+        return $json;
+    }
+    
+    public function getRaw() {
+        return $this->raw;
     }
     
     protected function loadPage($data) {
