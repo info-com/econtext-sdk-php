@@ -27,6 +27,11 @@ class Keywords extends Result {
         $defaultResults = array();
         if($this->callSizes != null && $this->hasError()) {
             $defaultResults = array_pad(array(), $this->callSizes[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
+            $defaultMappings = array_pad(array(), $this->callSizes[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
+            $size = count($defaultMappings);
+            $error = var_export($this->error, true);
+            error_log("An error occurred: {$error}");
+            error_log("defaultMappings set to contain {$size} elements");
         }
         $this->results = $this->get('results', $this->inner, $defaultResults);
         $this->mappings = $this->get('mappings', $this->inner, $defaultMappings);
