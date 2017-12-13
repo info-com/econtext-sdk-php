@@ -11,7 +11,7 @@ use eContext\ApiCall;
 use eContext\Client;
 use eContext\Result;
 
-class Usage extends ApiCall {
+class ById extends ApiCall {
     
     const JSON_INNER_ELEMENT = "category";
     const URL_REQUEST_BASE = "/v2/category/";
