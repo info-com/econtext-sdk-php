@@ -24,7 +24,8 @@ class Html extends Result {
         $this->results = array(
             "title"=>$this->get('title', $this->inner, ""),
             "scored_categories"=>$this->get('scored_categories', $this->inner, array()),
-            "scored_keywords"=>$this->get('scored_keywords', $this->inner, array())
+            "scored_keywords"=>$this->get('scored_keywords', $this->inner, array()),
+            "entities" => $this->get('entities', $this->inner, array())
         );
         return True;
     }
