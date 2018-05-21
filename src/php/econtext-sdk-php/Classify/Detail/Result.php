@@ -30,11 +30,9 @@ class Result  extends \eContext\Result {
     protected $flags;
     
     protected function loadPage($data) {
-        echo "loadPage...";
         if($data === null) {
             return null;
         }
-        parent::loadPage($data);
         $default = array();
         if($this->callSizes != null && $this->hasError()) {
             $default = array_pad(array(), $this->callSizes[($this->currentPage-1)], ["error_code"=> $this->getErrorCode(), "error_message"=>$this->getErrorMessage()]);
@@ -55,7 +53,6 @@ class Result  extends \eContext\Result {
      */
     public function yieldResults() {
         foreach($this->yieldPages() as $result) {
-            print_r($result);
             foreach($this->results as $x) {
                 yield $x;
             }
@@ -69,7 +66,6 @@ class Result  extends \eContext\Result {
      */
     public function yield_results() {
         foreach($this->yieldPages() as $result) {
-            print_r($result);
             foreach($this->_results as $x) {
                 yield $x;
             }
