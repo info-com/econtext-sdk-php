@@ -41,7 +41,7 @@ class Result  extends \eContext\Result {
         $this->categories = $this->get('categories', $this->inner, array());
         $this->vocabularies = $this->get('vocabularies', $this->inner, array());
         $this->flags = $this->get('flags', $this->inner, array());
-        $this->_results = $this->get('results', $this->inner, $default);
+        $this->results = $this->get('results', $this->inner, $default);
         $this->_results = $this->get('results', $this->inner, $default);
         return true;
     }
