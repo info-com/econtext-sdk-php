@@ -7,6 +7,8 @@
  */
 
 namespace eContext\Classify\Detail;
+use eContext\Classify\Classify;
+
 
 class Html extends Classify {
     

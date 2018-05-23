@@ -7,6 +7,7 @@
  */
 
 namespace eContext\Classify\Detail;
+use eContext\Classify\Classify;
 
 class Text extends Classify {
     
