@@ -29,7 +29,9 @@ abstract class Classify extends ApiCall {
             if($data == false) {
                 return;
             }
-            $this->addCallSize(count($data));
+            $callSize = is_array($data) ? count($data) : 1;
+
+            $this->addCallSize($callSize);
             $input = $this->input;
             $input['async'] = false;
             $input[static::CLASSIFY_TYPE] = $data;
